@@ -20,5 +20,5 @@ libraryDependencies ++= Seq(
   "org.apache.spark" % "spark-streaming_2.11" % Versions.spark,
   "org.apache.spark" % "spark-sql_2.11" % Versions.spark,
   "com.datastax.spark" % "spark-cassandra-connector_2.11" % "2.0.2",
-  "com.pygmalios" % "reactiveinflux-spark_2.11" % "1.4.0.10.0.4.1"
+  "com.paulgoldbaum" %% "scala-influxdb-client" % "0.5.2"
 )
