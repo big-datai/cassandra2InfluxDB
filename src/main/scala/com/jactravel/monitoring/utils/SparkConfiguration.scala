@@ -1,18 +1,12 @@
-package com.jactravel.monitoring.spark
+package com.jactravel.monitoring.utils
 
-import com.jactravel.monitoring.cassandra.CassandraConf
 import com.jactravel.monitoring.utils.Configuration._
-import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
 
 /**
   * Created by fayaz on 23.06.17.
   */
-trait SparkConfiguration extends CassandraConf {
-
-  // SPARK
-  private[config] val appName = config.getString("spark.appName")
-  private[config] val appMaster = config.getString("spark.master")
+trait SparkConfiguration {
 
   val sparkConf = new SparkConf()
     .setAppName(appName)
@@ -24,5 +18,4 @@ trait SparkConfiguration extends CassandraConf {
 
   val sc = new SparkContext(sparkConf)
 
-  val ssc = new StreamingContext(sc, Seconds(1))
 }
