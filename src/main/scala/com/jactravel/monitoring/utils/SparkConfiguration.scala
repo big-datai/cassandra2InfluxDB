@@ -1,21 +1,27 @@
 package com.jactravel.monitoring.utils
 
+import com.datastax.spark.connector.cql.CassandraConnectorConf
 import com.jactravel.monitoring.utils.Configuration._
-import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.SparkConf
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.cassandra._
+
 
 /**
   * Created by fayaz on 23.06.17.
   */
 trait SparkConfiguration {
 
-  val sparkConf = new SparkConf()
+  final val sparkConf: SparkConf = new SparkConf()
     .setAppName(appName)
     .setMaster(appMaster)
-    .set("spark.cassandra.connection.host", cassandraHost)
-    .set("spark.cassandra.connection.port", cassandraPort.toString)
-    .set("spark.cassandra.auth.username", cassandraUsername)
-    .set("spark.cassandra.auth.password", cassandraPassword)
 
-  val sc = new SparkContext(sparkConf)
-
+  final val spark: SparkSession = SparkSession
+    .builder()
+    .config(sparkConf)
+    .getOrCreate()
+    .setCassandraConf(
+      CassandraConnectorConf.ConnectionHostParam.option(cassandraHost) ++
+      CassandraConnectorConf.ConnectionPortParam.option(cassandraPort) ++
+      CassandraConnectorConf.KeepAliveMillisParam.option(10000))
 }
